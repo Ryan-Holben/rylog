@@ -7,9 +7,9 @@ class LoggerClient(object):
         self.server = None
         self.category = ""
 
-    def connectToServer(self, server):
+    def connect_to_server(self, server):
         self.server = server
-        server.connectToClient(self)
+        server.connect_to_client(self)
 
     def log(self, **kwargs):
         return self.server.log(**kwargs)

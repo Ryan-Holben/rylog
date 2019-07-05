@@ -19,9 +19,22 @@ class RyLog(object):
         self.level = level.info
         self.colored = True
         self.clients = []
+        self.allowed_categories = set()
+
+    def set_format(self, fmt):
+        self.format_string = fmt
 
     def set_logging_level(self, level):
         self.level = level
+
+    def add_category(self, category):
+        self.allowed_categories.add(category)
+
+    def remove_category(self, category):
+        self.allowed_categories.remove(category)
+
+    def set_categories(self, categories):
+        self.allowed_categories = set(categories)
 
     def use_colored_text(self, colored):
         self.colored = colored
@@ -40,6 +53,9 @@ class RyLog(object):
         kwargs["level"] = self.colors[
             kwargs["level"]] if self.colored else kwargs["level"].name
         kwargs["time"] = time()
+        if kwargs["category"] and kwargs[
+                "category"] not in self.allowed_categories:
+            return
 
         print(self.format_string.format(**kwargs))
 
@@ -67,11 +83,16 @@ class RyLog(object):
         else:
             return name
 
-    def connectToClient(self, client):
+    def connect_to_client(self, client):
         if client not in self.clients:
             self.clients.append(client)
 
-    def getLoggerInstance(self):
+    def get_logger_instance(self):
         logger = LoggerClient()
-        logger.connectToServer(self)
+        logger.connect_to_server(self)
+        return logger
+
+    def get_named_logger_instance(self, category):
+        logger = self.get_logger_instance()
+        logger.set_category(category)
         return logger
