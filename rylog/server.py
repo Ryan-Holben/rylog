@@ -1,20 +1,9 @@
-"""
-  rylog.py
-
-  Logging happening in a 3-dimensional Cartesian product.
-
-  1. The logging level: [debug, info, warn, error]
-  2. The logging category: e.g. software event, action, output
-  3. The namespace: e.g. my_class.class_method
-"""
-
 from time import time
 from colorama import Fore, Style
 import inspect
 
-from orderedenum import OrderedEnum
-
-level = OrderedEnum('level', 'debug info warn error')
+from .misc import level
+from .client import LoggerClient
 
 
 class RyLog(object):
@@ -29,6 +18,7 @@ class RyLog(object):
         self.format_string = "|{level}|{function}> - {msg}"
         self.level = level.info
         self.colored = True
+        self.clients = []
 
     def set_logging_level(self, level):
         self.level = level
@@ -77,23 +67,11 @@ class RyLog(object):
         else:
             return name
 
+    def connectToClient(self, client):
+        if client not in self.clients:
+            self.clients.append(client)
 
-class TestClass(object):
-
-    def foo(self, log):
-        log.debug("This is another test message!")
-
-
-def main():
-    r = RyLog()
-    r.set_logging_level(level.debug)
-    r.debug("hi")
-    r.info("hi")
-    r.warn("hi")
-    r.error("hi")
-
-    t = TestClass()
-    t.foo(r)
-
-
-main()
+    def getLoggerInstance(self):
+        logger = LoggerClient()
+        logger.connectToServer(self)
+        return logger
