@@ -8,6 +8,7 @@
   3. The namespace: e.g. my_class.class_method
 """
 
+from time import time
 from colorama import Fore, Style
 import inspect
 
@@ -25,7 +26,7 @@ class RyLog(object):
     }
 
     def __init__(self):
-        self.format_string = "[{level}|{function}> - {msg}"
+        self.format_string = "|{level}|{function}> - {msg}"
         self.level = level.info
         self.colored = True
 
@@ -48,6 +49,7 @@ class RyLog(object):
         kwargs["function"] = self.__get_calling_function_name()
         kwargs["level"] = self.colors[
             kwargs["level"]] if self.colored else kwargs["level"].name
+        kwargs["time"] = time()
 
         print(self.format_string.format(**kwargs))
 
@@ -76,20 +78,9 @@ class RyLog(object):
             return name
 
 
-# def bar():
-#     f = inspect.currentframe()
-#     print(f.f_back.f_code.co_name)
-#
-#
-# def foo():
-#     bar()
-
-# foo()
-
-
 class TestClass(object):
 
-    def butt(self, log):
+    def foo(self, log):
         log.debug("This is another test message!")
 
 
@@ -100,11 +91,9 @@ def main():
     r.info("hi")
     r.warn("hi")
     r.error("hi")
-    # r.debug("This is a test message")
 
-    # t = TestClass()
-    # t.butt(r)
-    # r.foo()
+    t = TestClass()
+    t.foo(r)
 
 
 main()
