@@ -1,7 +1,5 @@
 import rylog
 
-# from rylog import *
-
 
 class TestClass(object):
 
@@ -9,21 +7,25 @@ class TestClass(object):
         log.warn("This is another test message!")
 
 
+def bar(log):
+    log.error("I'm in a function!")
+
+
 def main():
     r = rylog.RyLog()
     r.set_logging_level(rylog.level.warn)
-    r.set_format("|{category}|{level}|{function}> - {msg}")
+    r.set_format("|{level}|{function}> - {msg}")
     r.add_category("action")
 
-    logger = r.get_logger_instance()
+    basic_log = r.get_logger_instance()
     memory_log = r.get_named_logger_instance("memory")
     action_log = r.get_named_logger_instance("action")
     output_log = r.get_named_logger_instance("output")
 
-    logger.debug("Ahhhh!  I'm scared. :'(")
-    logger.info("Ahhhh!  I'm scared. :'(")
-    logger.warn("Ahhhh!  I'm scared. :'(")
-    logger.error("Ahhhh!  I'm scared. :'(")
+    basic_log.debug("Ahhhh!  I'm scared. :'(")
+    basic_log.info("Ahhhh!  I'm scared. :'(")
+    basic_log.warn("Ahhhh!  I'm scared. :'(")
+    basic_log.error("Ahhhh!  I'm scared. :'(")
 
     r.set_categories(["memory", "output"])
 
@@ -33,7 +35,8 @@ def main():
     output_log.warn("konnichiwa")
 
     t = TestClass()
-    t.foo(logger)
+    t.foo(basic_log)
+    bar(basic_log)
 
 
 main()
