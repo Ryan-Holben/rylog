@@ -2,7 +2,7 @@
 
 > simple yet functional logging for Python 3.x
 
-Why?  I found that the rather simple functionality I wanted out of a logging module in Python wasn't as easy to accomplish with Pyton's `logging` module as it should be.  So I reinvented the wheel-- sorry in advance.
+Why?  I found that the rather simple functionality I wanted out of a logging module in Python wasn't as easy to accomplish with Python's `logging` module as it should be.  So I reinvented the wheel-- sorry in advance.
 
 ## usage
 Logging with rylog is controlled with a simple server-client model.  First, create the server and set options and filters:
