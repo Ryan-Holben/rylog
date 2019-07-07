@@ -15,6 +15,7 @@ def main():
     r = rylog.RyLog()
     r.set_logging_level(rylog.level.warn)
     r.set_format("|{level}|{function}> - {msg}")
+    r.use_colored_text(True)
     r.add_category("action")
 
     basic_log = r.get_logger_instance()

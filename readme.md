@@ -11,6 +11,7 @@ Logging with rylog is controlled with a simple server-client model.  First, crea
 r = rylog.RyLog()
 r.set_logging_level(rylog.level.warn)
 r.set_format("|{category}|{level}|{function}> - {msg}")
+r.use_colored_text(True)
 ```
 
 You can then create logger instances in categories of your choosing:
