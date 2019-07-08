@@ -2,3 +2,5 @@
 *.pyc
 __pycache__
 notes.md
+dist
+rylog.egg-info
